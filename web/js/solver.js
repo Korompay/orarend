@@ -1,11 +1,10 @@
-// Uni schedule optimizer — browser port of main.py.
+// Uni schedule optimizer. Used by the web app (through worker.js) and by cli.mjs.
 //
 // Picks one option (section) for every course so that nothing overlaps,
 // every mandatory course is included, and the weighted "badness" score
 // (days on campus, 8 am starts, gaps, late finishes ...) is as low as possible.
 //
-// Keep this file in step with main.py: same functions, same order of operations,
-// same results. tests/compare.py checks that both give identical output.
+// tests/solver.test.mjs checks the results against saved ones: run `npm test` after a change.
 //
 // Data shapes (plain objects, so they can be sent to a Web Worker):
 //   Meeting { day: 0..6 (Mon..Sun), start: minutes, end: minutes, weeks: bitmask }
@@ -22,11 +21,13 @@ const WEEK_NAMES = { even: 0b01, odd: 0b10, every: EVERY_WEEK };
 export const DEFAULT_WEIGHTS = {
   day: 100, // per day you have to go in
   early: 30, // per class starting before `early_before`
-  gap_hour: 10, // per hour of idle time between classes on the same day
+  gap_hour: 10, // per hour of idle time between classes, beyond GAP_ALLOWANCE
   late: 15, // per class ending after `late_after`
   optional_missing: 40, // per optional course left out
 };
 export const DEFAULT_SETTINGS = { early_before: "09:00", late_after: "18:00" };
+// Free minutes between two classes before it counts as a gap (time to change rooms).
+export const GAP_ALLOWANCE = 30;
 
 export function toMinutes(hhmm) {
   const [h, m] = hhmm.split(":");
@@ -149,7 +150,7 @@ export function loadNeptun(data, includeRestricted, language, warnings) {
 
 /**
  * Combine already-parsed JSON documents (our format, a Neptun response,
- * or har2json / har.js output) into one problem.
+ * or har.js output) into one problem.
  */
 export function loadData(datas, { includeRestricted = false, language = "magyar" } = {}) {
   const courses = [];
@@ -200,7 +201,7 @@ export class Scorer {
       for (const dayMeetings of byDay.values()) {
         dayMeetings.sort((a, b) => a.start - b.start);
         for (let i = 1; i < dayMeetings.length; i++) {
-          gapMinutes += Math.max(0, dayMeetings[i].start - dayMeetings[i - 1].end);
+          gapMinutes += Math.max(0, dayMeetings[i].start - dayMeetings[i - 1].end - GAP_ALLOWANCE);
         }
       }
       days += byDay.size;
@@ -280,7 +281,7 @@ export function solve(coursesIn, scorer, top, onProgress) {
   for (let i = 0; i <= order.length; i++) optionalAfter.push(order.slice(i).filter((c) => !c.mandatory).length);
 
   // Kept schedules. On equal scores the earliest-found one is evicted first;
-  // the final list is sorted by (score, discovery order) — same as main.py.
+  // the final list is sorted by (score, discovery order).
   const best = []; // { score, n, chosen }
   let counter = 0;
   let nodes = 0;
@@ -390,7 +391,7 @@ export function optimizeCourses(courses, weights, settings, top = 3, onProgress)
 }
 
 /**
- * Parsed JSON documents in, JSON-ready result out. Same shape as main.py `optimize()`:
+ * Parsed JSON documents in, JSON-ready result out. Also what `node cli.mjs --json` prints:
  * { schedules: [{rank, score, breakdown, choices, slots}], warnings: [string], weights, settings }
  * An empty `schedules` list means the mandatory courses always clash.
  */

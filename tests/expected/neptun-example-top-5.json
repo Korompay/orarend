@@ -1,0 +1,1683 @@
+{
+  "args": [
+    "tests/fixtures/neptun.json",
+    "example.json",
+    "--top",
+    "5"
+  ],
+  "result": {
+    "schedules": [
+      {
+        "rank": 1,
+        "score": 572.5,
+        "breakdown": {
+          "days": 4.5,
+          "early": 3.5,
+          "gap_hours": 0.25,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1"
+          },
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Physics",
+            "option": "P2"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3"
+          },
+          {
+            "course": "Programming",
+            "option": "G3"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páros"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páratlan"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L01, L02, L03, L04, L05"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "10:30",
+            "end": "11:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páros",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páratlan",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L01, L02, L03, L04, L05",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P2",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "score": 572.5,
+        "breakdown": {
+          "days": 4.5,
+          "early": 3.5,
+          "gap_hours": 0.25,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1"
+          },
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Physics",
+            "option": "P2"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3"
+          },
+          {
+            "course": "Programming",
+            "option": "G3"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páros"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páratlan"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L06, L07, L08, L09, L10"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "10:30",
+            "end": "11:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páros",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páratlan",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L06, L07, L08, L09, L10",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P2",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "score": 572.5,
+        "breakdown": {
+          "days": 4.5,
+          "early": 3.5,
+          "gap_hours": 0.25,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1"
+          },
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Physics",
+            "option": "P2"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3"
+          },
+          {
+            "course": "Programming",
+            "option": "G3"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páratlan"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páros"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L01, L02, L03, L04, L05"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "10:30",
+            "end": "11:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páratlan",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páros",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L01, L02, L03, L04, L05",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P2",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "score": 572.5,
+        "breakdown": {
+          "days": 4.5,
+          "early": 3.5,
+          "gap_hours": 0.25,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1"
+          },
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Physics",
+            "option": "P2"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3"
+          },
+          {
+            "course": "Programming",
+            "option": "G3"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páratlan"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páros"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L06, L07, L08, L09, L10"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "10:30",
+            "end": "11:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páratlan",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páros",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L06, L07, L08, L09, L10",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P2",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G16, G17, G18, G15",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páros",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "score": 572.5,
+        "breakdown": {
+          "days": 4.5,
+          "early": 3.5,
+          "gap_hours": 0.25,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1"
+          },
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E"
+          },
+          {
+            "course": "Physics",
+            "option": "P2"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3"
+          },
+          {
+            "course": "Programming",
+            "option": "G3"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G11, G12, G13, G14"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páros"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páratlan"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L01, L02, L03, L04, L05"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páratlan"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Adatbázisok elmélet",
+            "option": "E1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "A programozás alapjai 3 elmélet",
+            "option": "E",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Testnevelés BSc - 1/B gyakorlat",
+            "option": "Funkcionalis koredzes 9, Spinning 9, Ricochet 9, Erofejlesztes 9, Ergometeres evezes 9, Squash 9, Falmaszas 9, Tenisz 9",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "10:30",
+            "end": "11:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Adatbázisok gyakorlat",
+            "option": "G1 páros",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "even"
+          },
+          {
+            "course": "Operációs rendszerek labor",
+            "option": "L1_páratlan",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "A programozás alapjai 3 labor",
+            "option": "L3",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia labor",
+            "option": "L01, L02, L03, L04, L05",
+            "day": "Tue",
+            "day_index": 1,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "08:15",
+            "end": "10:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika gyakorlat",
+            "option": "11, 12, 13, 14, 15",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "16:00",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P2",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Valószínűségszámítás és statisztika elmélet",
+            "option": "1",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Szoftvertechnológia elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "14:15",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Operációs rendszerek elmélet",
+            "option": "E",
+            "day": "Thu",
+            "day_index": 3,
+            "start": "16:15",
+            "end": "18:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Kódolástechnika gyakorlat",
+            "option": "G11, G12, G13, G14",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "10:15",
+            "end": "12:00",
+            "weeks": "odd"
+          },
+          {
+            "course": "Adatbázisok labor",
+            "option": "L5 páratlan",
+            "day": "Fri",
+            "day_index": 4,
+            "start": "12:15",
+            "end": "14:00",
+            "weeks": "odd"
+          }
+        ]
+      }
+    ],
+    "warnings": [
+      "skipping A programozás alapjai 3 labor (LIMSC2): IMSc group",
+      "skipping A programozás alapjai 3 labor (AL): taught in angol",
+      "skipping A programozás alapjai 3 elmélet (NE): taught in német",
+      "skipping A programozás alapjai 3 labor (LIMSC1): IMSc group",
+      "skipping A programozás alapjai 3 elmélet (AE): taught in angol",
+      "skipping A programozás alapjai 3 labor (LIMSC3): IMSc group",
+      "skipping A programozás alapjai 3 labor (NL): taught in német",
+      "skipping Adatbázisok gyakorlat (Gi2): IMSc group",
+      "skipping Adatbázisok gyakorlat (Gi3): IMSc group",
+      "skipping Adatbázisok gyakorlat (Gi1): IMSc group",
+      "skipping Adatbázisok labor (Li3): IMSc group",
+      "skipping Adatbázisok labor (Li1): IMSc group",
+      "skipping Adatbázisok labor (Li2): IMSc group",
+      "skipping Adatbázisok elmélet (NE1): taught in német",
+      "skipping Adatbázisok gyakorlat (AG1): taught in angol",
+      "skipping Adatbázisok gyakorlat (NG1): taught in német",
+      "skipping Adatbázisok elmélet (AE1): taught in angol",
+      "skipping Adatbázisok labor (AL1): taught in angol",
+      "skipping Adatbázisok labor (NL1): taught in német",
+      "skipping Kódolástechnika gyakorlat (GA): taught in angol",
+      "skipping Kódolástechnika elmélet (EA): taught in angol",
+      "skipping Kódolástechnika elmélet (EA_Erasmus): taught in angol",
+      "skipping Kódolástechnika gyakorlat (IMSc_1): IMSc group",
+      "skipping Kódolástechnika gyakorlat (IMSc_2): IMSc group",
+      "skipping Kódolástechnika gyakorlat (GN): taught in német",
+      "skipping Kódolástechnika gyakorlat (GA_Erasmus): taught in angol",
+      "skipping Kódolástechnika gyakorlat (IMSc_3): IMSc group",
+      "skipping Kódolástechnika elmélet (EN): taught in német",
+      "skipping Operációs rendszerek labor (LA_ERASMUS): taught in angol",
+      "skipping Operációs rendszerek labor (LA): taught in angol",
+      "skipping Operációs rendszerek elmélet (EN): taught in német",
+      "skipping Operációs rendszerek labor (iMScL1): IMSc group",
+      "skipping Operációs rendszerek labor (iMScL2): IMSc group",
+      "skipping Operációs rendszerek labor (iMScL3): IMSc group",
+      "skipping Operációs rendszerek labor (LN): taught in német",
+      "skipping Operációs rendszerek elmélet (EA_ERASMUS): taught in angol",
+      "skipping Operációs rendszerek elmélet (EA): taught in angol",
+      "skipping Szoftvertechnológia labor (LN): taught in német",
+      "skipping Szoftvertechnológia elmélet (EA): taught in angol",
+      "skipping Szoftvertechnológia labor (LA2): taught in angol",
+      "skipping Szoftvertechnológia elmélet (EN): taught in német",
+      "skipping Szoftvertechnológia labor (iMScL1): IMSc group",
+      "skipping Szoftvertechnológia labor (iMScL2): IMSc group",
+      "skipping Szoftvertechnológia labor (iMScL3): IMSc group",
+      "skipping Szoftvertechnológia labor (LA1): taught in angol",
+      "skipping Szoftvertechnológia labor (LA3): taught in angol",
+      "skipping Szoftvertechnológia labor (LA4): taught in angol",
+      "skipping Szoftvertechnológia labor (LA6): taught in angol",
+      "skipping Szoftvertechnológia labor (LA5): taught in angol",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (A1): taught in angol",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (A2): taught in angol",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (A3): taught in angol",
+      "skipping Valószínűségszámítás és statisztika elmélet (A0): taught in angol",
+      "skipping Valószínűségszámítás és statisztika elmélet (N0): taught in német",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (N1): taught in német",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (I1): IMSc group",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (I2): IMSc group",
+      "skipping Valószínűségszámítás és statisztika gyakorlat (I3): IMSc group"
+    ],
+    "weights": {
+      "day": 100,
+      "early": 30,
+      "gap_hour": 10,
+      "late": 15,
+      "optional_missing": 40
+    },
+    "settings": {
+      "early_before": "09:00",
+      "late_after": "18:00"
+    }
+  }
+}

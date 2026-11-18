@@ -462,7 +462,7 @@ function run({ reveal = false } = {}) {
     status("");
     showMessage(
       location.protocol === "file:"
-        ? "Az oldalt webszerverről kell megnyitni, nem fájlként. Helyben: a web mappában futtasd a `python -m http.server` parancsot, majd nyisd meg a http://localhost:8000 címet."
+        ? "Az oldalt webszerverről kell megnyitni, nem fájlként. Helyben: a projekt mappájában futtasd az `npm start` parancsot, majd nyisd meg a http://localhost:8000 címet."
         : `Nem sikerült elindítani a számítást (${e.message || "ismeretlen hiba"}). Próbáld frissebb böngészőben.`,
     );
   };

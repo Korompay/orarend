@@ -6,22 +6,23 @@ Give it every course you need to take and all the sections (time slots) each cou
 - every mandatory course is included,
 - the schedule is as comfortable as possible: few days on campus, few early starts, few gaps, few late finishes.
 
-It prints the best few timetables, each with its score.
+It shows the best few timetables, each with its score.
 
 ## Requirements
 
-Python 3.10 or newer. There are no external dependencies.
+Node.js 18 or newer for the command line and the tests. There are no other dependencies. The web app only needs a browser.
 
 ## Usage
 
 ```bash
-python main.py example.json            # show the 3 best schedules
-python main.py example.json --top 10   # show the 10 best
-python main.py settings.json adatb.json szoftlab.json   # several files, incl. Neptun exports
-python main.py targyak.json --json     # machine-readable output
+node cli.mjs example.json            # show the 3 best schedules
+node cli.mjs example.json --top 10   # show the 10 best
+node cli.mjs settings.json adatb.json szoftlab.json   # several files, incl. Neptun exports
+node cli.mjs neptun.har              # a Neptun HAR file works directly
+node cli.mjs neptun.har --json      # machine-readable output
 ```
 
-All files are combined into one problem. `weights` and `settings` are read from files in our own format.
+All files are combined into one problem. `weights` and `settings` are read from files in our own format. Run `node cli.mjs --help` for every option.
 
 Example output:
 
@@ -39,17 +40,19 @@ Example output:
 
 If the mandatory courses always clash, it prints `No valid schedule: the mandatory courses always clash.`
 
+`--json` prints the same JSON the web app works with:
+`{"schedules": [{"rank", "score", "breakdown", "choices", "slots"}], "warnings", "weights", "settings"}`.
+
 ## Web app
 
-`web/` is a static site that does everything in the browser: drop in the Neptun `.har` file (or `targyak.json`, a single Neptun response, or a file in our own format), set your preferences, and it shows the best timetables as a weekly grid. Nothing is uploaded anywhere. This matters because a `.har` file contains the user's Neptun session.
+`web/` is a static site that does everything in the browser: drop in the Neptun `.har` file (or single Neptun responses, or a file in our own format), set your preferences, and it shows the best timetables as a weekly grid. Nothing is uploaded anywhere. This matters because a `.har` file contains the user's Neptun session.
 
 Per course you can mark it mandatory or optional, leave it out, or switch off individual sections (e.g. to stay in the same group as a friend). Preferences are remembered in the browser.
 
 Run it locally (ES modules and Web Workers don't work from `file://`):
 
 ```bash
-cd web
-python -m http.server 8000      # then open http://localhost:8000
+npm start                       # then open http://localhost:8000 (another port: node serve.mjs 8080)
 ```
 
 Deploy to Firebase Hosting (free Spark plan, `firebase.json` already points at `web/`):
@@ -67,20 +70,25 @@ To publish a change later, just run `firebase deploy --only hosting` again. Olde
 
 | File | Role |
 |---|---|
-| `web/js/solver.js` | Line-by-line port of `main.py` (loading, scoring, search) |
-| `web/js/har.js` | Port of `har2json.py`, plus file-type detection |
+| `web/js/solver.js` | The optimizer: loading, scoring, search |
+| `web/js/har.js` | Reads HAR files and detects which kind of input file it got |
 | `web/js/worker.js` | Runs the search in a Web Worker so the page stays responsive and can cancel it |
 | `web/js/app.js` | UI only: files, preferences, course toggles, result rendering |
 | `web/index.html`, `web/style.css` | Page and baseline styles |
+| `cli.mjs` | Command-line front end for the same solver |
+| `serve.mjs` | Local web server for `web/` (`npm start`) |
 
-`main.py` and `solver.js` must stay in step. After changing either, run:
+## Tests
 
 ```bash
-python tests/compare.py          # needs Node.js 18+; checks both give identical results
+npm test
 ```
 
-`python main.py <files> --json` prints the same JSON the web app works with:
-`{"schedules": [{"rank", "score", "breakdown", "choices", "slots"}], "warnings", "weights", "settings"}`.
+`tests/solver.test.mjs` runs the solver on every case in `tests/expected/` and checks that the result is the same as the saved one. Each file there holds the command-line arguments of one case and its expected result.
+
+The input files are [example.json](example.json) (our own format) and [tests/fixtures/neptun.json](tests/fixtures/neptun.json), real Neptun course lists that exercise the Neptun import: language and IMSc filtering, odd/even weeks from the class dates and merging same-time sections.
+
+If you change the solver on purpose (for example a new scoring rule), the tests will fail. Check that the new results are what you wanted, then save them with `UPDATE=1 npm test` and look over the diff in `tests/expected/` before committing.
 
 ## Input format
 
@@ -120,27 +128,25 @@ The input is a JSON file. See [example.json](example.json) for a complete exampl
 
 ## Importing from Neptun
 
-On the course sign-up page, open the browser dev tools (Network tab), open a subject's course list, and save the JSON response of the course-list request (the one with a `data` array) to a file. Do this once per subject, then pass all the files to `main.py`.
+On the course sign-up page, open the browser dev tools (Network tab), open a subject's course list, and save the JSON response of the course-list request (the one with a `data` array) to a file. Do this once per subject, then pass all the files to `cli.mjs` or drop them into the web app.
 
 ### All subjects at once with a HAR file
 
-Instead of saving each response one by one, you can record all of them in a single HAR file and convert it with [har2json.py](har2json.py):
+Instead of saving each response one by one, you can record all of them in a single HAR file:
 
 1. On the course sign-up page, open the dev tools Network tab and turn on **Preserve log** (Chrome) or **Persist Logs** (Firefox), so nothing is lost when the page reloads.
 2. Click through every subject you need, so that each one's course list loads.
 3. Save the whole log: in Chrome, right-click any request and choose **Save all as HAR with content** (or use the download icon in the Network tab). In Firefox, right-click and choose **Save All As HAR**.
 
-Then convert the HAR file and run the optimizer on the result:
+Then drop the HAR file into the web app, or pass it straight to the command line:
 
 ```bash
-python har2json.py neptun.har               # writes targyak.json
-python har2json.py neptun.har mine.json     # or choose the output file
-python main.py settings.json targyak.json
+node cli.mjs settings.json neptun.har
 ```
 
-`har2json.py` collects every `GetSubjectsCourses` response from the HAR file and keeps one per subject. If you opened a subject more than once, the last response is used. It ignores failed or empty responses. If it finds none at all, check that Preserve log was on and that you opened the subjects before saving.
+It collects every `GetSubjectsCourses` response from the HAR file and keeps one per subject. If you opened a subject more than once, the last response is used. It ignores failed or empty responses. If it finds none at all, check that Preserve log was on and that you opened the subjects before saving.
 
-A HAR file contains your Neptun session cookies, so don't share it, and delete it once you've converted it.
+A HAR file contains your Neptun session cookies, so don't share it, and delete it once you're done.
 
 - Every subject + course type (Gyakorlat, Labor, Előadás ...) becomes one mandatory course. The section codes (`G1 páros`, `Li3` ...) are the options.
 - Whether a section meets every week, odd weeks or even weeks comes from its real dates (`classInstanceTimeTableList`). So `G1 páros` and `G1 páratlan` at the same time don't clash.
@@ -155,7 +161,7 @@ Lower is better. A schedule's score is the sum of these penalties. Each one is c
 |---|---|---|
 | `day` | 100 | per day with at least one class |
 | `early` | 30 | per class starting before `early_before` (default 09:00) |
-| `gap_hour` | 10 | per hour of idle time between classes on the same day |
+| `gap_hour` | 10 | per hour of idle time between classes on the same day; the first 30 minutes of each gap are free (time to change rooms) |
 | `late` | 15 | per class ending after `late_after` (default 18:00) |
 | `optional_missing` | 40 | per optional course left out |
 
@@ -163,22 +169,23 @@ The defaults treat an extra day on campus as the worst thing. To change your pri
 
 ## How the search works
 
-The search lives in `solve()` in [main.py](main.py).
+The search lives in `solve()` in [web/js/solver.js](web/js/solver.js).
 
 1. **Ordering.** Mandatory courses come first. Within each group, courses with fewer options come first, so the search hits clashes early and drops dead ends quickly.
 2. **Backtracking.** For each course in turn, it tries each section that doesn't overlap anything already chosen. For an optional course, it also tries skipping it.
 3. **Pruning (branch and bound).** It keeps the best `--top` schedules found so far in a heap. Before going deeper, it calculates a lower bound on the score of any schedule that could come out of the current partial one. If that bound is already worse than the worst schedule being kept, the whole branch is skipped.
    - The bound counts days, early classes and late classes, because adding more classes can only raise these. It also counts optional courses that have already been skipped.
    - It leaves out gaps, because a class added later can fill a gap and make it smaller.
-4. **Result.** It prints the kept schedules sorted from best to worst, each with a breakdown of what made up its score.
+4. **Result.** It returns the kept schedules sorted from best to worst, each with a breakdown of what made up its score.
 
 ## Code overview
 
+All in [web/js/solver.js](web/js/solver.js):
+
 | Part | Role |
 |---|---|
-| `Meeting`, `Option`, `Course` | Data classes: one time slot, one section, one course |
-| `load()` | Reads the JSON file and fills in the default weights and settings |
+| Meeting, Option, Course | Plain objects: one time slot, one section, one course (shapes at the top of the file) |
+| `loadData()` | Reads the parsed input files and fills in the default weights and settings |
 | `Scorer` | Computes the penalty breakdown, the total score and the lower bound used for pruning |
 | `solve()` | Runs the branch-and-bound search |
-| `optimize()` | Parsed JSON in, JSON-ready result out (used by `--json` and `tests/compare.py`) |
-| `print_schedule()` | Prints a schedule grouped by day |
+| `optimize()` | Parsed JSON in, JSON-ready result out (used by `cli.mjs` and the tests) |

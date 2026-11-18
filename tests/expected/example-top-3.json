@@ -1,0 +1,316 @@
+{
+  "args": [
+    "example.json",
+    "--top",
+    "3"
+  ],
+  "result": {
+    "schedules": [
+      {
+        "rank": 1,
+        "score": 270.0,
+        "breakdown": {
+          "days": 2.0,
+          "early": 1.0,
+          "gap_hours": 0.0,
+          "late": 0.0,
+          "optional_missing": 1
+        },
+        "choices": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Physics",
+            "option": "P1"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY1"
+          },
+          {
+            "course": "Programming",
+            "option": "G2"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G2",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:00",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:00",
+            "end": "14:00",
+            "weeks": "every"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "score": 275.0,
+        "breakdown": {
+          "days": 2.0,
+          "early": 1.0,
+          "gap_hours": 3.0,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Physics",
+            "option": "P1"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3"
+          },
+          {
+            "course": "Programming",
+            "option": "G2"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G2",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:00",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:00",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY3",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "score": 280.0,
+        "breakdown": {
+          "days": 2.0,
+          "early": 1.0,
+          "gap_hours": 3.5,
+          "late": 1.0,
+          "optional_missing": 0
+        },
+        "choices": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1"
+          },
+          {
+            "course": "Physics",
+            "option": "P1"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY1"
+          },
+          {
+            "course": "Programming",
+            "option": "G2"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming"
+          }
+        ],
+        "slots": [
+          {
+            "course": "Calculus lecture",
+            "option": "EA1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "08:00",
+            "end": "10:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Calculus practice",
+            "option": "GY1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G2",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "12:00",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Physics",
+            "option": "P1",
+            "day": "Mon",
+            "day_index": 0,
+            "start": "14:00",
+            "end": "16:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Discrete Math",
+            "option": "D2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "10:00",
+            "end": "12:00",
+            "weeks": "every"
+          },
+          {
+            "course": "Programming",
+            "option": "G2",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "12:00",
+            "end": "14:00",
+            "weeks": "every"
+          },
+          {
+            "course": "PE",
+            "option": "Swimming",
+            "day": "Wed",
+            "day_index": 2,
+            "start": "18:00",
+            "end": "19:30",
+            "weeks": "every"
+          }
+        ]
+      }
+    ],
+    "warnings": [],
+    "weights": {
+      "day": 100,
+      "early": 30,
+      "gap_hour": 10,
+      "late": 15,
+      "optional_missing": 40
+    },
+    "settings": {
+      "early_before": "09:00",
+      "late_after": "18:00"
+    }
+  }
+}

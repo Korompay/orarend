@@ -1,4 +1,4 @@
-// Reading the files the user drops in — browser port of har2json.py.
+// Reading the files the user drops in (or passes to cli.mjs).
 //
 // A Neptun .har file contains every request the browser made, including the
 // user's session cookies and tokens. We only ever read it here, in the browser:
@@ -17,7 +17,7 @@ function responseText(content) {
  * Pull every GetSubjectsCourses response out of a parsed HAR, once per subject
  * (if a subject was opened several times, the last response wins).
  * Returns { subjects: [{subjectId, data}], skipped } — `subjects` is the same
- * list that har2json.py writes to targyak.json.
+ * format as tests/fixtures/neptun.json.
  */
 export function extractFromHar(har) {
   const bySubject = new Map();
