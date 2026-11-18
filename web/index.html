@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Órarend-tervező</title>
+  <meta name="description" content="Neptunból exportált kurzusokból a legkényelmesebb órarend. Minden a böngésződben fut.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%221%22 y=%221%22 width=%2214%22 height=%2214%22 rx=%223.5%22 fill=%22%230071e3%22/%3E%3Crect x=%224%22 y=%225%22 width=%223.5%22 height=%223%22 rx=%221%22 fill=%22white%22/%3E%3Crect x=%228.5%22 y=%228.5%22 width=%223.5%22 height=%223%22 rx=%221%22 fill=%22white%22/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="page-head">
+    <h1>Órarend-tervező</h1>
+    <p>A Neptun-exportodból megkeresi a legkényelmesebb órarendet. Minden a böngésződben fut, a fájljaid nem kerülnek fel sehova.</p>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <!-- 1. Files -->
+      <section class="step" aria-labelledby="files-title">
+        <h2 id="files-title">Neptun export</h2>
+
+        <label class="dropzone card" id="dropzone">
+          <input type="file" id="file-input" accept=".har,.json,application/json" multiple hidden>
+          <span class="drop-title">Húzd ide a .har fájlt</span>
+          <span class="drop-sub">vagy kattints a tallózáshoz</span>
+        </label>
+        <ul class="group" id="file-list" hidden></ul>
+        <p class="error" id="file-error" role="alert" hidden></p>
+
+        <details class="disclosure">
+          <summary>Hogyan készítsem el a .har fájlt?</summary>
+          <ol class="howto">
+            <li>Neptunban nyisd meg a <b>Tárgyfelvétel</b> oldalt.</li>
+            <li>Nyomj F12-t, válts a <b>Network</b> fülre, és kapcsold be a <b>Preserve log</b> opciót.</li>
+            <li>Nyisd le egyesével az összes tárgyat, amit fel akarsz venni.</li>
+            <li>Jobb klikk bármelyik kérésen, majd <b>Save all as HAR</b>. Ha van <i>(sanitized)</i> változat, azt válaszd.</li>
+            <li>Húzd a mentett fájlt a fenti mezőbe.</li>
+          </ol>
+          <p class="note">A .har fájlban benne van a Neptun-munkameneted. Ne küldd el senkinek, és használat után töröld.</p>
+        </details>
+      </section>
+
+      <!-- 2. Courses -->
+      <section class="step" aria-labelledby="courses-title">
+        <h2 id="courses-title">Tárgyak</h2>
+        <p class="lead" id="courses-hint">Az export betöltése után itt jelennek meg.</p>
+        <ul class="group courses" id="course-list" hidden></ul>
+        <details class="disclosure" id="skipped" hidden>
+          <summary id="skipped-summary"></summary>
+          <ul class="skipped-list" id="skipped-list"></ul>
+        </details>
+      </section>
+
+      <!-- 3. Preferences -->
+      <section class="step" aria-labelledby="prefs-title">
+        <h2 id="prefs-title">Beállítások</h2>
+        <p class="lead">Büntetőpontok. A kevesebb pont a jobb órarend.</p>
+        <form id="prefs" autocomplete="off">
+          <div class="group">
+            <label class="row"><span class="label">Bejárós nap<span class="sub">pont / nap</span></span>
+              <input type="number" name="day" min="0" step="1"></label>
+            <div class="row"><span class="label">Korai óra<span class="sub">ha ennyi előtt kezdődik · pont / alkalom</span></span>
+              <span class="pair"><input type="time" name="early_before" step="300" aria-label="Korai, ha ennyi előtt kezdődik"><input type="number" name="early" min="0" step="1" aria-label="Korai óra pontja"></span></div>
+            <div class="row"><span class="label">Késői óra<span class="sub">ha ennyi után ér véget · pont / alkalom</span></span>
+              <span class="pair"><input type="time" name="late_after" step="300" aria-label="Késői, ha ennyi után ér véget"><input type="number" name="late" min="0" step="1" aria-label="Késői óra pontja"></span></div>
+            <label class="row"><span class="label">Lyukóra<span class="sub">pont / 60 perc üresjárat</span></span>
+              <input type="number" name="gap_hour" min="0" step="1"></label>
+            <label class="row"><span class="label">Kihagyott választható tárgy<span class="sub">pont / tárgy</span></span>
+              <input type="number" name="optional_missing" min="0" step="1"></label>
+          </div>
+          <div class="group">
+            <label class="row"><span class="label">Megjelenített órarendek</span>
+              <input type="number" name="top" min="1" max="50" step="1"></label>
+            <label class="row"><span class="label">Oktatási nyelv</span>
+              <input type="text" name="language" list="languages"></label>
+            <label class="row"><span class="label">Feltételhez kötött kurzusok is<span class="sub">IMSc csoportok soha</span></span>
+              <input type="checkbox" name="include_restricted" class="switch"></label>
+          </div>
+          <datalist id="languages"><option value="magyar"><option value="angol"><option value="német"></datalist>
+          <button type="button" class="text-button" id="reset-prefs">Alapértékek visszaállítása</button>
+        </form>
+      </section>
+    </aside>
+
+    <section class="results" aria-labelledby="results-title">
+      <div class="results-head">
+        <h2 id="results-title">Órarendek</h2>
+        <div class="actions">
+          <span class="status" id="status" aria-live="polite"></span>
+          <button type="button" id="cancel" class="button secondary" hidden>Leállítás</button>
+          <button type="button" id="run" class="button primary" disabled>Órarend keresése</button>
+        </div>
+      </div>
+      <div id="results" class="result-list">
+        <div class="empty">
+          <h3>Még nincs órarend</h3>
+          <p>Töltsd be a Neptun-exportodat, és a legjobb órarendek itt jelennek meg.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

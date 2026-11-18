@@ -1,0 +1,6 @@
+# Neptun exports contain your login session: never commit them
+*.har
+
+__pycache__/
+.firebase/
+firebase-debug.log

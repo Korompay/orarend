@@ -18,6 +18,7 @@ Python 3.10 or newer. There are no external dependencies.
 python main.py example.json            # show the 3 best schedules
 python main.py example.json --top 10   # show the 10 best
 python main.py settings.json adatb.json szoftlab.json   # several files, incl. Neptun exports
+python main.py targyak.json --json     # machine-readable output
 ```
 
 All files are combined into one problem. `weights` and `settings` are read from files in our own format.
@@ -37,6 +38,49 @@ Example output:
 ```
 
 If the mandatory courses always clash, it prints `No valid schedule: the mandatory courses always clash.`
+
+## Web app
+
+`web/` is a static site that does everything in the browser: drop in the Neptun `.har` file (or `targyak.json`, a single Neptun response, or a file in our own format), set your preferences, and it shows the best timetables as a weekly grid. Nothing is uploaded anywhere. This matters because a `.har` file contains the user's Neptun session.
+
+Per course you can mark it mandatory or optional, leave it out, or switch off individual sections (e.g. to stay in the same group as a friend). Preferences are remembered in the browser.
+
+Run it locally (ES modules and Web Workers don't work from `file://`):
+
+```bash
+cd web
+python -m http.server 8000      # then open http://localhost:8000
+```
+
+Deploy to Firebase Hosting (free Spark plan, `firebase.json` already points at `web/`):
+
+```bash
+npm install -g firebase-tools
+firebase login
+firebase use --add               # pick the Firebase project once; writes .firebaserc, leaves firebase.json alone
+firebase hosting:channel:deploy teszt   # optional: temporary preview URL (expires in 7 days)
+firebase deploy --only hosting   # prints the public URL, e.g. https://<project>.web.app
+```
+
+Don't run `firebase init hosting`: `firebase.json` is already set up and init may overwrite it.
+To publish a change later, just run `firebase deploy --only hosting` again. Older releases can be rolled back in the Firebase console under Hosting.
+
+| File | Role |
+|---|---|
+| `web/js/solver.js` | Line-by-line port of `main.py` (loading, scoring, search) |
+| `web/js/har.js` | Port of `har2json.py`, plus file-type detection |
+| `web/js/worker.js` | Runs the search in a Web Worker so the page stays responsive and can cancel it |
+| `web/js/app.js` | UI only: files, preferences, course toggles, result rendering |
+| `web/index.html`, `web/style.css` | Page and baseline styles |
+
+`main.py` and `solver.js` must stay in step. After changing either, run:
+
+```bash
+python tests/compare.py          # needs Node.js 18+; checks both give identical results
+```
+
+`python main.py <files> --json` prints the same JSON the web app works with:
+`{"schedules": [{"rank", "score", "breakdown", "choices", "slots"}], "warnings", "weights", "settings"}`.
 
 ## Input format
 
@@ -116,4 +160,5 @@ The search lives in `solve()` in [main.py](main.py).
 | `load()` | Reads the JSON file and fills in the default weights and settings |
 | `Scorer` | Computes the penalty breakdown, the total score and the lower bound used for pruning |
 | `solve()` | Runs the branch-and-bound search |
+| `optimize()` | Parsed JSON in, JSON-ready result out (used by `--json` and `tests/compare.py`) |
 | `print_schedule()` | Prints a schedule grouped by day |
