@@ -6,6 +6,33 @@ import { parseInputFile } from "./har.js";
 const DAY_LABELS = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 const DAY_SHORT = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
 const WEEK_LABEL = { odd: "páratlan hét", even: "páros hét" };
+const WEEK_TITLE = { odd: "Páratlan hét", even: "Páros hét" };
+
+/** "odd" or "even": parity of this week's ISO week number (the solver uses the same parity). */
+function currentWeekParity(now = new Date()) {
+  const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  const weekday = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - weekday); // Thursday of this ISO week
+  const week = Math.ceil(((d - Date.UTC(d.getUTCFullYear(), 0, 1)) / 86400000 + 1) / 7);
+  return week % 2 ? "odd" : "even";
+}
+
+const chevron = (dir) => {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 16 16");
+  svg.setAttribute("width", "14");
+  svg.setAttribute("height", "14");
+  svg.setAttribute("aria-hidden", "true");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", dir === "left" ? "M10 3 5 8l5 5" : "M6 3l5 5-5 5");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "currentColor");
+  path.setAttribute("stroke-width", "2");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+  svg.append(path);
+  return svg;
+};
 const DEFAULT_PREFS = { ...DEFAULT_WEIGHTS, ...DEFAULT_SETTINGS, top: 3, language: "magyar", include_restricted: false };
 const PREFS_KEY = "orarend.prefs.v1";
 
@@ -527,6 +554,32 @@ function scheduleCard(s, hasOptional) {
   ].filter(Boolean);
 
   const choices = [...s.choices].sort((x, y) => x.course.localeCompare(y.course, "hu"));
+
+  // With classes held every other week, show one week at a time and let the user flip between them.
+  const grid = el("div", { class: "week-scroll" });
+  let weekSwitch = null;
+  if (s.slots.some((x) => x.weeks !== "every")) {
+    const thisWeek = currentWeekParity();
+    let week = thisWeek;
+    const label = el("span", { class: "week-label", "aria-live": "polite" });
+    const show = (w) => {
+      week = w;
+      label.replaceChildren(WEEK_TITLE[w], ...(w === thisWeek ? [el("small", {}, "ez a hét")] : []));
+      grid.replaceChildren(weekGrid(s.slots, w));
+    };
+    const flip = () => show(week === "odd" ? "even" : "odd");
+    weekSwitch = el(
+      "div",
+      { class: "week-switch", role: "group", "aria-label": "Hét váltása" },
+      el("button", { type: "button", "aria-label": "Előző hét", onclick: flip }, chevron("left")),
+      label,
+      el("button", { type: "button", "aria-label": "Következő hét", onclick: flip }, chevron("right")),
+    );
+    show(week);
+  } else {
+    grid.append(weekGrid(s.slots));
+  }
+
   return el(
     "article",
     { class: "schedule", "aria-label": `${s.rank}. órarend` },
@@ -536,8 +589,9 @@ function scheduleCard(s, hasOptional) {
       el("span", { class: "rank" }, `${s.rank}.`),
       el("span", { class: "score" }, fmt(s.score), el("small", {}, " pont")),
       el("span", { class: "facts" }, facts.map((f) => el("span", { class: "fact" }, f))),
+      weekSwitch,
     ),
-    el("div", { class: "week-scroll" }, weekGrid(s.slots)),
+    grid,
     el(
       "details",
       { class: "disclosure choices" },
@@ -563,8 +617,14 @@ function scheduleCard(s, hasOptional) {
   );
 }
 
-function weekGrid(slots) {
+/**
+ * Week grid of a schedule. With `week` ("odd" / "even") only that week's classes are drawn,
+ * full width; without it, biweekly classes share their slot side by side. The day and hour
+ * range always come from all slots, so flipping weeks doesn't make the grid jump.
+ */
+function weekGrid(slots, week = null) {
   const toMin = (t) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5));
+  const visible = week ? slots.filter((x) => x.weeks === "every" || x.weeks === week) : slots;
   const days = [0, 1, 2, 3, 4];
   for (const d of [5, 6]) if (slots.some((x) => x.day_index === d)) days.push(d);
   const h0 = Math.min(8, Math.floor(Math.min(...slots.map((x) => toMin(x.start))) / 60));
@@ -578,16 +638,16 @@ function weekGrid(slots) {
     el(
       "div",
       { class: "col" },
-      slots
+      visible
         .filter((x) => x.day_index === d)
         .map((x) => {
           const start = toMin(x.start);
           const end = toMin(x.end);
-          const weekText = WEEK_LABEL[x.weeks];
+          const weekText = week ? (x.weeks === "every" ? "" : "kéthetente") : WEEK_LABEL[x.weeks];
           return el(
             "div",
             {
-              class: `block ${x.weeks}`,
+              class: week ? "block" : `block ${x.weeks}`,
               style: {
                 "--c": colorOf(x.course),
                 top: at(start),

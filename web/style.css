@@ -343,6 +343,27 @@ button { font: inherit; cursor: pointer; }
 .schedule-head .score { font-size: 28px; line-height: 1.14; font-weight: 600; } /* title-2 */
 .schedule-head .score small { font-size: 17px; font-weight: 400; color: var(--apple-text-secondary); }
 .facts { display: flex; flex-wrap: wrap; gap: var(--apple-space-2); }
+
+.week-switch {
+  margin-left: auto; align-self: center;
+  display: inline-flex; align-items: center; gap: var(--apple-space-1); padding: 2px;
+  background: var(--apple-elevated); border: 1px solid var(--apple-card-border);
+  box-shadow: var(--apple-shadow-sm); border-radius: var(--apple-radius-full);
+}
+.week-switch button {
+  display: grid; place-items: center; width: 30px; height: 30px; padding: 0;
+  border: none; border-radius: var(--apple-radius-full);
+  background: transparent; color: var(--apple-accent);
+  transition: background-color 0.15s var(--ease), transform 0.15s var(--ease);
+}
+.week-switch button:hover { background: var(--apple-surface); }
+.week-switch button:active { transform: scale(0.92); }
+.week-label {
+  min-width: 7.5em; text-align: center; font-size: 14px; font-weight: 600; letter-spacing: -0.016em;
+  display: grid; line-height: 1.2;
+}
+.week-label small { font-size: 11px; font-weight: 500; color: var(--apple-text-secondary); letter-spacing: 0; }
+.week-scroll .week { animation: fade-in 0.3s cubic-bezier(0, 0, 0.58, 1); }
 .fact {
   font-size: 12px; font-weight: 500; padding: 2px var(--apple-space-2);
   background: var(--apple-elevated); border: 1px solid var(--apple-card-border); border-radius: var(--apple-radius-sm);
