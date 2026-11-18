@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "orarend",
     "public": "web",
     "ignore": ["firebase.json", "**/.*"],
     "headers": [

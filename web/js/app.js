@@ -105,17 +105,43 @@ function restorePrefs() {
   writePrefs({ ...DEFAULT_PREFS, ...saved });
 }
 
+// Preferences live in a dialog behind the gear button. Changes made there are
+// applied when it closes: if a search has already run, it re-runs by itself.
+let prefsDirty = false;
 form.addEventListener("submit", (e) => e.preventDefault());
 form.addEventListener("change", (e) => {
   savePrefs();
+  prefsDirty = true;
   if (e.target.name === "language" || e.target.name === "include_restricted") refreshCourses();
-  markStale();
 });
 $("reset-prefs").addEventListener("click", () => {
   writePrefs(DEFAULT_PREFS);
   savePrefs();
+  prefsDirty = true;
   refreshCourses();
-  markStale();
+});
+
+const settings = $("settings");
+const gear = $("open-settings");
+gear.addEventListener("click", () => {
+  prefsDirty = false;
+  settings.showModal();
+  gear.setAttribute("aria-expanded", "true");
+});
+$("close-settings").addEventListener("click", () => settings.close());
+// A click on the dimmed backdrop (outside the sheet's box) closes it too.
+settings.addEventListener("click", (e) => {
+  if (e.target !== settings) return;
+  const r = settings.getBoundingClientRect();
+  const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+  if (!inside) settings.close();
+});
+settings.addEventListener("close", () => {
+  gear.setAttribute("aria-expanded", "false");
+  if (!prefsDirty) return;
+  prefsDirty = false;
+  if (state.hasResults) run();
+  else markStale();
 });
 
 // ---------------------------------------------------------------- files
