@@ -122,6 +122,26 @@ The input is a JSON file. See [example.json](example.json) for a complete exampl
 
 On the course sign-up page, open the browser dev tools (Network tab), open a subject's course list, and save the JSON response of the course-list request (the one with a `data` array) to a file. Do this once per subject, then pass all the files to `main.py`.
 
+### All subjects at once with a HAR file
+
+Instead of saving each response one by one, you can record all of them in a single HAR file and convert it with [har2json.py](har2json.py):
+
+1. On the course sign-up page, open the dev tools Network tab and turn on **Preserve log** (Chrome) or **Persist Logs** (Firefox), so nothing is lost when the page reloads.
+2. Click through every subject you need, so that each one's course list loads.
+3. Save the whole log: in Chrome, right-click any request and choose **Save all as HAR with content** (or use the download icon in the Network tab). In Firefox, right-click and choose **Save All As HAR**.
+
+Then convert the HAR file and run the optimizer on the result:
+
+```bash
+python har2json.py neptun.har               # writes targyak.json
+python har2json.py neptun.har mine.json     # or choose the output file
+python main.py settings.json targyak.json
+```
+
+`har2json.py` collects every `GetSubjectsCourses` response from the HAR file and keeps one per subject. If you opened a subject more than once, the last response is used. It ignores failed or empty responses. If it finds none at all, check that Preserve log was on and that you opened the subjects before saving.
+
+A HAR file contains your Neptun session cookies, so don't share it, and delete it once you've converted it.
+
 - Every subject + course type (Gyakorlat, Labor, Előadás ...) becomes one mandatory course. The section codes (`G1 páros`, `Li3` ...) are the options.
 - Whether a section meets every week, odd weeks or even weeks comes from its real dates (`classInstanceTimeTableList`). So `G1 páros` and `G1 páratlan` at the same time don't clash.
 - Only sections taught in `magyar` are kept (change it with `--language`). IMSc groups are always skipped. Sections with any other sign-up requirement are skipped unless you pass `--include-restricted`, but a section you are already signed up for is kept. A message on stderr names each skipped section and why. Full sections are kept.
