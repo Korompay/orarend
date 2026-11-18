@@ -17,7 +17,10 @@ Python 3.10 or newer. There are no external dependencies.
 ```bash
 python main.py example.json            # show the 3 best schedules
 python main.py example.json --top 10   # show the 10 best
+python main.py settings.json adatb.json szoftlab.json   # several files, incl. Neptun exports
 ```
+
+All files are combined into one problem. `weights` and `settings` are read from files in our own format.
 
 Example output:
 
@@ -67,12 +70,22 @@ The input is a JSON file. See [example.json](example.json) for a complete exampl
 | `options[].meetings` | Every time slot of that section. A section can meet several times a week. |
 | `day` | `Mon`, `Tue`, `Wed`, `Thu`, `Fri` or `Sat` |
 | `start`, `end` | `HH:MM`, 24-hour clock |
+| `weeks` | Optional. `odd` or `even` for a class held every other week (by ISO week number). Default: `every`. |
 | `settings` | Optional. Sets what counts as "early" and "late". |
 | `weights` | Optional. Sets how much each kind of inconvenience costs. Any key you leave out uses its default. |
 
+## Importing from Neptun
+
+On the course sign-up page, open the browser dev tools (Network tab), open a subject's course list, and save the JSON response of the course-list request (the one with a `data` array) to a file. Do this once per subject, then pass all the files to `main.py`.
+
+- Every subject + course type (Gyakorlat, Labor, Előadás ...) becomes one mandatory course. The section codes (`G1 páros`, `Li3` ...) are the options.
+- Whether a section meets every week, odd weeks or even weeks comes from its real dates (`classInstanceTimeTableList`). So `G1 páros` and `G1 páratlan` at the same time don't clash.
+- Only sections taught in `magyar` are kept (change it with `--language`). IMSc groups are always skipped. Sections with any other sign-up requirement are skipped unless you pass `--include-restricted`, but a section you are already signed up for is kept. A message on stderr names each skipped section and why. Full sections are kept.
+- Sections that meet at exactly the same times are shown as one option, e.g. `(G1, G2, G3)`.
+
 ## How the score works
 
-Lower is better. A schedule's score is the sum of these penalties:
+Lower is better. A schedule's score is the sum of these penalties. Each one is counted for an average week, meaning the mean of an even and an odd week, so biweekly classes count half:
 
 | Penalty | Default weight | Counted |
 |---|---|---|
