@@ -423,7 +423,7 @@ function run({ reveal = false } = {}) {
     }
     const ms = Math.round(performance.now() - t0);
     status(`${data.schedules.length} órarend · ${ms < 1000 ? `${ms} ms` : `${fmt(ms / 1000)} s`}`);
-    renderResults(data.schedules, hasOptional);
+    renderResults(data.schedules, hasOptional, data.conflict, courses);
     // In the one-column layout the results sit below a long sidebar: bring them into view.
     if (reveal && matchMedia("(max-width: 1024px)").matches) {
       $("results-title").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -455,16 +455,65 @@ function showMessage(text, title = "Nincs eredmény") {
   $("results").replaceChildren(el("div", { class: "empty" }, el("h3", {}, title), el("p", {}, text)));
 }
 
-function renderResults(schedules, hasOptional) {
+function renderResults(schedules, hasOptional, conflict = [], courses = []) {
   if (schedules.length === 0) {
-    showMessage(
-      "A kötelező tárgyak minden kombinációban ütköznek. Jelölj néhányat választhatónak, vagy engedélyezz több kurzust.",
-      "Nincs érvényes órarend",
-    );
+    renderConflict(conflict, courses);
     return;
   }
   state.hasResults = true;
   $("results").replaceChildren(...schedules.map((s) => scheduleCard(s, hasOptional)));
+}
+
+/** Explains an empty result: which mandatory courses can never be taken together, and when they meet. */
+function renderConflict(names, courses) {
+  state.hasResults = false;
+  if (names.length === 0) {
+    showMessage("A kötelező tárgyak minden kombinációban ütköznek.", "Nincs érvényes órarend");
+    return;
+  }
+  const byName = new Map(courses.map((c) => [c.name, c]));
+  const MAX_SHOWN = 4;
+  const rows = names.map((name) => {
+    const options = byName.get(name)?.options ?? [];
+    const shown = options.slice(0, MAX_SHOWN).map((o) => `${o.name}: ${o.meetings.map(formatMeeting).join(", ")}`);
+    if (options.length > MAX_SHOWN) shown.push(`+${options.length - MAX_SHOWN} további kurzus`);
+    return el(
+      "li",
+      { class: "conflict-row" },
+      el("span", { class: "dot", style: { "--c": colorOf(name) } }),
+      el("span", { class: "conflict-text" }, el("span", { class: "course-name" }, name),
+        shown.map((line) => el("span", { class: "conflict-times" }, line))),
+      el(
+        "button",
+        {
+          type: "button",
+          class: "text-button",
+          onclick: () => {
+            override(name).mandatory = false;
+            renderCourses();
+            run();
+          },
+        },
+        "Legyen választható",
+      ),
+    );
+  });
+  const intro =
+    names.length === 1
+      ? "Ennek a kötelező tárgynak minden kurzusa ütközik:"
+      : names.length === 2
+        ? "Ez a két kötelező tárgy semmilyen kurzusválasztással nem fér el egymás mellett:"
+        : `Ez a ${names.length} kötelező tárgy semmilyen kurzusválasztással nem fér el egymás mellett:`;
+  $("results").replaceChildren(
+    el(
+      "div",
+      { class: "empty" },
+      el("h3", {}, "Nincs érvényes órarend"),
+      el("p", {}, intro),
+      el("ul", { class: "group conflict" }, rows),
+      el("p", {}, "Tegyél egyet választhatóvá vagy hagyd ki, vagy engedélyezz több kurzust a bal oldali listában."),
+    ),
+  );
 }
 
 function scheduleCard(s, hasOptional) {

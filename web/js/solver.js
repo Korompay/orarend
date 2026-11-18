@@ -320,6 +320,41 @@ export function solve(coursesIn, scorer, top, onProgress) {
   return best.sort((a, b) => a.score - b.score || a.n - b.n).map((e) => [e.score, e.chosen]);
 }
 
+// ---------------------------------------------------------------- clash explanation
+// Web-only helpers (no counterpart in main.py): they explain an empty result.
+
+/** True if every mandatory course can get a section without clashes (optional ones can always be skipped). */
+function mandatoryFit(courses) {
+  const order = courses
+    .filter((c) => c.mandatory)
+    .map(mergeSameTime)
+    .sort((a, b) => a.options.length - b.options.length);
+  const search = (i, taken) => {
+    if (i === order.length) return true;
+    for (const opt of order[i].options) {
+      if (opt.meetings.some((m) => taken.some((t) => overlaps(m, t)))) continue;
+      if (search(i + 1, taken.concat(opt.meetings))) return true;
+    }
+    return false;
+  };
+  return search(0, []);
+}
+
+/**
+ * When no schedule exists, find a smallest group of mandatory courses that can never be
+ * taken together (deletion filter: drop each course in turn, keep it out if the rest still
+ * clash). Returns their names, or [] if the mandatory courses do fit.
+ */
+export function findConflict(courses) {
+  let group = courses.filter((c) => c.mandatory);
+  if (mandatoryFit(group)) return [];
+  for (const c of [...group]) {
+    const without = group.filter((x) => x !== c);
+    if (!mandatoryFit(without)) group = without;
+  }
+  return group.map((c) => c.name);
+}
+
 // ---------------------------------------------------------------- output
 
 /** Every meeting of a schedule, sorted by day and start time. */
