@@ -322,7 +322,7 @@ export function solve(coursesIn, scorer, top, onProgress) {
 }
 
 // ---------------------------------------------------------------- clash explanation
-// Web-only helpers (no counterpart in main.py): they explain an empty result.
+// They explain an empty result (used by the web app and cli.mjs).
 
 /** True if every mandatory course can get a section without clashes (optional ones can always be skipped). */
 function mandatoryFit(courses) {

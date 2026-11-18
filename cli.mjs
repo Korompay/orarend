@@ -4,7 +4,7 @@
 // Files can be our own format (see example.json), Neptun responses, a list of them (like tests/fixtures/neptun.json) or a Neptun .har.
 import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
-import { optimize } from "./web/js/solver.js";
+import { findConflict, loadData, optimize } from "./web/js/solver.js";
 import { parseInputFile } from "./web/js/har.js";
 
 const HELP = `Find the best uni timetable.
@@ -36,11 +36,8 @@ if (args.help || files.length === 0) {
 }
 
 const datas = files.map((f) => parseInputFile(f, readFileSync(f, "utf-8")).data);
-const result = optimize(datas, {
-  top: Number(args.top),
-  includeRestricted: args["include-restricted"],
-  language: args.language,
-});
+const opts = { includeRestricted: args["include-restricted"], language: args.language };
+const result = optimize(datas, { ...opts, top: Number(args.top) });
 
 if (args.json) {
   console.log(JSON.stringify(result, null, 2));
@@ -50,6 +47,8 @@ if (args.json) {
 for (const w of result.warnings) console.error(w);
 if (result.schedules.length === 0) {
   console.log("No valid schedule: the mandatory courses always clash.");
+  const conflict = findConflict(loadData(datas, opts).courses);
+  if (conflict.length) console.log(`These can never be taken together: ${conflict.join(", ")}`);
   process.exit(0);
 }
 for (const { rank, score, breakdown: b, slots } of result.schedules) {
