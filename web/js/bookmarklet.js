@@ -18,6 +18,7 @@ function neptunCapture(APP) {
   var MARK = "GetSubjectsCourses";
   var APP_ORIGIN = new URL(APP).origin;
   var subjects = new Map();
+  var skipped = new Set(); // ids of captured subjects the user unticked
   var delivered = false;
 
   /* ---------------------------------------------------------- capture */
@@ -95,15 +96,15 @@ function neptunCapture(APP) {
     "border:1px solid rgba(0,0,0,.06);box-shadow:0 8px 30px rgba(0,0,0,.12);" +
     "font:14px/1.43 -apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:-.016em}" +
     "@media (prefers-color-scheme:dark){.p{background:#2c2c2e;color:#f5f5f7;border-color:rgba(255,255,255,.08);box-shadow:0 8px 30px rgba(0,0,0,.5)}" +
-    ".s,.n{color:#a1a1a6!important}.b2{background:#3a3a3c!important;color:#2997ff!important}.b1{background:#2997ff!important;color:#000!important}.x{background:#3a3a3c!important}.r{color:#a1a1a6!important}.r:hover{background:rgba(255,255,255,.1)!important}}" +
+    ".s,.n{color:#a1a1a6!important}.b2{background:#3a3a3c!important;color:#2997ff!important}.b1{background:#2997ff!important;color:#000!important}.x{background:#3a3a3c!important}.l input{accent-color:#2997ff!important}}" +
     ".h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}" +
     ".t{font-size:17px;font-weight:600}" +
     ".x{width:24px;height:24px;border:0;border-radius:980px;background:#f5f5f7;color:#86868b;cursor:pointer;font-family:inherit;font-size:12px;line-height:24px;padding:0}" +
     ".s{color:#86868b}" +
     ".l{margin:8px 0 0;padding:0;list-style:none;max-height:120px;overflow:auto;font-size:12px}" +
-    ".l li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:1px 0}" +
-    ".r{flex:none;width:18px;height:18px;border:0;border-radius:980px;background:transparent;color:#86868b;cursor:pointer;font-family:inherit;font-size:10px;line-height:18px;padding:0}" +
-    ".r:hover{background:rgba(0,0,0,.06)}" +
+    ".l label{display:flex;align-items:center;gap:8px;padding:1px 0;cursor:pointer}" +
+    ".l input{flex:none;width:14px;height:14px;margin:0;accent-color:#0071e3;cursor:pointer}" +
+    ".l .off span{opacity:.4}" +
     ".a{display:flex;gap:8px;margin-top:12px}" +
     "button.b1,button.b2{flex:1;border:0;border-radius:980px;padding:8px 12px;font-family:inherit;font-size:14px;font-weight:600;line-height:1.2;cursor:pointer}" +
     ".b1{background:#0071e3;color:#fff}.b2{background:#f5f5f7;color:#0071e3}" +
@@ -128,38 +129,44 @@ function neptunCapture(APP) {
 
   function render() {
     var n = subjects.size;
+    var picked = payload().length;
+    var off = n - picked ? " (" + (n - picked) + " kihagyva)" : "";
     $(".s").textContent =
       note ||
       (n === 0
         ? "Figyelem a Neptunt. Nyisd le egyesével a tárgyakat, amiket fel akarsz venni."
-        : n + " tárgy rögzítve" + (delivered ? ", átküldve ✓" : ". Nyisd le a többit is, aztán: Megnyitás."));
+        : picked + " tárgy rögzítve" + off + (delivered ? ", átküldve ✓" : ". Nyisd le a többit is, aztán: Megnyitás."));
     var list = $(".l");
     list.replaceChildren();
     subjects.forEach(function (s, id) {
       var li = document.createElement("li");
-      var name = document.createElement("span");
-      name.textContent = titleOf(s);
-      // Lets the user drop a subject they opened by mistake.
-      var remove = document.createElement("button");
-      remove.className = "r";
-      remove.textContent = "✕";
-      remove.title = "Eltávolítás: " + titleOf(s);
-      remove.setAttribute("aria-label", remove.title);
-      remove.addEventListener("click", function () {
-        subjects.delete(id);
+      // Unticking leaves out a subject opened by mistake; ticking it again brings it back.
+      var label = document.createElement("label");
+      if (skipped.has(id)) label.className = "off";
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      box.checked = !skipped.has(id);
+      box.addEventListener("change", function () {
+        if (box.checked) skipped.delete(id);
+        else skipped.add(id);
         delivered = false;
         render();
       });
-      li.append(name, remove);
+      var name = document.createElement("span");
+      name.textContent = titleOf(s);
+      label.append(box, name);
+      li.append(label);
       list.append(li);
     });
     list.style.display = n ? "" : "none";
-    $(".b1").disabled = n === 0;
-    $(".b2").disabled = n === 0;
+    $(".b1").disabled = picked === 0;
+    $(".b2").disabled = picked === 0;
   }
 
   function payload() {
-    return Array.from(subjects.values());
+    return Array.from(subjects.values()).filter(function (s) {
+      return !skipped.has(s.subjectId);
+    });
   }
 
   function send() {

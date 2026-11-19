@@ -38,7 +38,7 @@ const DEFAULT_PREFS = { ...DEFAULT_WEIGHTS, ...DEFAULT_SETTINGS, top: 3, languag
 const PREFS_KEY = "orarend.prefs.v1";
 
 const state = {
-  files: [], // { id, name, label, data, enabled }
+  files: [], // { id, name, label, data }
   overrides: new Map(), // course name -> { mandatory?: boolean, excluded: boolean, disabled: Set<section code> }
   openCourses: new Set(), // course names whose section list is expanded
   loaded: null, // last loadData() result
@@ -180,7 +180,7 @@ async function handleFiles(fileList) {
   for (const file of fileList) {
     try {
       const parsed = parseInputFile(file.name, await file.text());
-      state.files.push({ id: state.nextId++, name: file.name, label: parsed.label, data: parsed.data, enabled: true });
+      state.files.push({ id: state.nextId++, name: file.name, label: parsed.label, data: parsed.data });
       added++;
       if (parsed.kind === "native") {
         // Our own format may carry weights/settings: put them into the form.
@@ -199,8 +199,6 @@ async function handleFiles(fileList) {
   if (added) run({ reveal: true });
 }
 
-// Each loaded file has a checkbox: unticking it leaves the file's subjects out
-// without forgetting the file, so ticking it again brings them back.
 function renderFiles() {
   const list = $("file-list");
   list.hidden = state.files.length === 0;
@@ -208,23 +206,24 @@ function renderFiles() {
     ...state.files.map((f) =>
       el(
         "li",
-        {},
+        { class: "file-row" },
+        el("span", { class: "name", title: f.name }, f.name),
+        el("span", { class: "meta" }, f.label),
         el(
-          "label",
-          { class: `file-row${f.enabled ? "" : " off"}`, title: f.enabled ? "Kivétel a listából" : "Visszarakás a listába" },
-          el("input", {
-            type: "checkbox",
-            checked: f.enabled,
-            "aria-label": `${f.name} használata`,
-            onchange: (e) => {
-              f.enabled = e.target.checked;
+          "button",
+          {
+            type: "button",
+            class: "icon-button",
+            title: "Eltávolítás",
+            "aria-label": `${f.name} eltávolítása`,
+            onclick: () => {
+              state.files = state.files.filter((x) => x.id !== f.id);
               renderFiles();
               refreshCourses();
               markStale();
             },
-          }),
-          el("span", { class: "name" }, f.name),
-          el("span", { class: "meta" }, f.label),
+          },
+          "✕",
         ),
       ),
     ),
@@ -260,9 +259,8 @@ function override(name) {
 
 function refreshCourses() {
   const prefs = readPrefs();
-  const active = state.files.filter((f) => f.enabled);
-  state.loaded = active.length
-    ? loadData(active.map((f) => f.data), { includeRestricted: prefs.include_restricted, language: prefs.language })
+  state.loaded = state.files.length
+    ? loadData(state.files.map((f) => f.data), { includeRestricted: prefs.include_restricted, language: prefs.language })
     : null;
   renderCourses();
 }
@@ -271,9 +269,7 @@ function renderCourses() {
   const courses = state.loaded?.courses ?? [];
   $("courses-hint").textContent = courses.length
     ? "Döntsd el tárgyanként, kötelező-e, és nyisd le, ha csak bizonyos kurzusai jöhetnek szóba."
-    : state.files.length
-      ? "Nincs bepipált export. Pipáld be fent, amelyiket használni szeretnéd."
-      : "Az export betöltése után itt jelennek meg.";
+    : "Az export betöltése után itt jelennek meg.";
   $("run").disabled = courses.length === 0;
 
   subjectColors.clear();
@@ -711,7 +707,7 @@ window.addEventListener("message", (e) => {
   importDone = true;
   // A new capture replaces the previous one; dropped files stay.
   state.files = state.files.filter((f) => !f.fromNeptun);
-  state.files.push({ id: state.nextId++, name: "Neptun", label: `${subjects.length} tárgy`, data: subjects, fromNeptun: true, enabled: true });
+  state.files.push({ id: state.nextId++, name: "Neptun", label: `${subjects.length} tárgy`, data: subjects, fromNeptun: true });
   e.source?.postMessage({ type: "orarend-received", count: subjects.length }, e.origin);
   history.replaceState(null, "", location.pathname + location.search);
   $("file-error").hidden = true;
