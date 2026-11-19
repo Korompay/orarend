@@ -204,6 +204,23 @@ function neptunCapture(APP) {
   window[KEY].show();
 }
 
+/**
+ * Neptun hosts the app accepts captured data from. Exact names only: a pattern such as
+ * "contains neptun" would also let neptun.example.com or notneptun.com send a fake course list.
+ * Add your university's Neptun host here to use the bookmarklet with it.
+ */
+export const NEPTUN_HOSTS = ["neptun.bme.hu"];
+
+/** True if `origin` (as in MessageEvent.origin) is one of NEPTUN_HOSTS over HTTPS. */
+export function isNeptunOrigin(origin) {
+  try {
+    const url = new URL(origin);
+    return url.protocol === "https:" && url.port === "" && NEPTUN_HOSTS.includes(url.hostname);
+  } catch {
+    return false;
+  }
+}
+
 /** The bookmarklet as a javascript: URL that sends its capture to `appUrl` (this page's address). */
 export function bookmarkletHref(appUrl) {
   return "javascript:" + encodeURIComponent(`(${neptunCapture.toString()})(${JSON.stringify(appUrl)});void 0`);

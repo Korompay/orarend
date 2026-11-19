@@ -2,7 +2,7 @@
 // The search itself runs in worker.js (solver.js); this file only does the UI.
 import { loadData, DEFAULT_WEIGHTS, DEFAULT_SETTINGS, EVERY_WEEK, ODD, toHHMM } from "./solver.js";
 import { parseInputFile } from "./har.js";
-import { bookmarkletHref } from "./bookmarklet.js";
+import { bookmarkletHref, isNeptunOrigin } from "./bookmarklet.js";
 
 const DAY_LABELS = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 const DAY_SHORT = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
@@ -687,17 +687,11 @@ bookmarkletLink.addEventListener("click", (e) => {
   hint.textContent = "Ne itt kattints rá: húzd fel a könyvjelzősávba, és a Neptun Tárgyfelvétel oldalán használd.";
 });
 
-/** Only accept data from a Neptun page (any host with "neptun" in its name, e.g. neptun.bme.hu). */
-function fromNeptun(origin) {
-  try {
-    return new URL(origin).hostname.split(".").some((part) => part.includes("neptun"));
-  } catch {
-    return false;
-  }
-}
-
+// Only accept data from a known Neptun host (NEPTUN_HOSTS), and only from the window that opened
+// this page (the Neptun tab where the bookmarklet runs).
 window.addEventListener("message", (e) => {
-  if (!fromNeptun(e.origin) || e.data?.type !== "orarend-import") return;
+  if (!isNeptunOrigin(e.origin) || !window.opener || e.source !== window.opener) return;
+  if (e.data?.type !== "orarend-import") return;
   const subjects = e.data.subjects;
   if (!Array.isArray(subjects) || subjects.length === 0 || !subjects.every((s) => Array.isArray(s?.data?.data))) return;
   importDone = true;
