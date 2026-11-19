@@ -200,6 +200,19 @@ a { color: var(--apple-accent); text-decoration: none; }
 .drop-title { font-weight: 600; }
 .drop-sub { font-size: 14px; color: var(--apple-text-secondary); }
 
+.neptun-button { display: grid; justify-items: start; gap: var(--apple-space-3); padding: var(--apple-space-5); }
+.bookmarklet {
+  display: inline-flex; align-items: center; gap: var(--apple-space-2);
+  padding: 10px var(--apple-space-5); border-radius: var(--apple-radius-full);
+  background: var(--apple-accent); color: var(--apple-on-accent);
+  font-size: 17px; font-weight: 600; letter-spacing: -0.022em;
+  cursor: grab; user-select: none; box-shadow: var(--apple-shadow-md);
+  transition: transform 0.15s var(--ease), box-shadow 0.3s var(--ease);
+}
+.bookmarklet:hover { transform: translateY(-1px); box-shadow: var(--apple-shadow-lg); }
+.bookmarklet:active { cursor: grabbing; transform: scale(0.97); }
+#bookmarklet-hint { color: var(--apple-text-secondary); }
+
 /* Grouped list (iOS-style): rows separated by hairlines. */
 .group { list-style: none; padding: 0; overflow: hidden; }
 .group > li, .group > .row { border-top: 1px solid var(--apple-card-border); }

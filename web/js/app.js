@@ -2,6 +2,7 @@
 // The search itself runs in worker.js (solver.js); this file only does the UI.
 import { loadData, DEFAULT_WEIGHTS, DEFAULT_SETTINGS, EVERY_WEEK, ODD, toHHMM } from "./solver.js";
 import { parseInputFile } from "./har.js";
+import { bookmarkletHref } from "./bookmarklet.js";
 
 const DAY_LABELS = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 const DAY_SHORT = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
@@ -673,8 +674,66 @@ function weekGrid(slots, week = null) {
   );
 }
 
+// ---------------------------------------------------------------- Neptun bookmarklet
+
+// The draggable link carries the bookmarklet, pointed back at this page's address.
+const appUrl = location.origin + location.pathname;
+const bookmarkletLink = $("bookmarklet");
+bookmarkletLink.href = bookmarkletHref(appUrl);
+bookmarkletLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  const hint = $("bookmarklet-hint");
+  hint.hidden = false;
+  hint.textContent = "Ne itt kattints rá: húzd fel a könyvjelzősávba, és a Neptun Tárgyfelvétel oldalán használd.";
+});
+
+/** Only accept data from a Neptun page (any host with "neptun" in its name, e.g. neptun.bme.hu). */
+function fromNeptun(origin) {
+  try {
+    return new URL(origin).hostname.split(".").some((part) => part.includes("neptun"));
+  } catch {
+    return false;
+  }
+}
+
+window.addEventListener("message", (e) => {
+  if (!fromNeptun(e.origin) || e.data?.type !== "orarend-import") return;
+  const subjects = e.data.subjects;
+  if (!Array.isArray(subjects) || subjects.length === 0 || !subjects.every((s) => Array.isArray(s?.data?.data))) return;
+  importDone = true;
+  // A new capture replaces the previous one; dropped files stay.
+  state.files = state.files.filter((f) => !f.fromNeptun);
+  state.files.push({ id: state.nextId++, name: "Neptun", label: `${subjects.length} tárgy`, data: subjects, fromNeptun: true });
+  e.source?.postMessage({ type: "orarend-received", count: subjects.length }, e.origin);
+  history.replaceState(null, "", location.pathname + location.search);
+  $("file-error").hidden = true;
+  renderFiles();
+  refreshCourses();
+  run({ reveal: true });
+});
+
+// Opened by the bookmarklet (address ends in #import): tell the Neptun tab we're ready to receive.
+let importDone = false;
+function announceReady() {
+  if (location.hash !== "#import" || !window.opener) return;
+  importDone = false;
+  let tries = 0;
+  const ping = () => {
+    if (importDone || tries++ >= 20) return;
+    try {
+      window.opener.postMessage({ type: "orarend-ready" }, "*"); // carries no data
+    } catch {
+      return;
+    }
+    setTimeout(ping, 500);
+  };
+  ping();
+}
+window.addEventListener("hashchange", announceReady);
+
 // ---------------------------------------------------------------- start
 
 restorePrefs();
 renderFiles();
 refreshCourses();
+announceReady();

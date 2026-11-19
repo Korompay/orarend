@@ -47,6 +47,8 @@ If the mandatory courses always clash, it prints `No valid schedule: the mandato
 
 `web/` is a static site that does everything in the browser: drop in the Neptun `.har` file (or single Neptun responses, or a file in our own format), set your preferences, and it shows the best timetables as a weekly grid. Nothing is uploaded anywhere. This matters because a `.har` file contains the user's Neptun session.
 
+The easiest way to get the data in is the **Neptun → Órarend** bookmarklet on the page: drag it to the bookmarks bar, click it on Neptun's course sign-up page, open the subjects, then press *Megnyitás* in the small panel. It only watches the page's own `GetSubjectsCourses` responses (no requests of its own, no cookies or tokens) and hands them to the app with `postMessage`, or saves them as `targyak.json` (*Letöltés*). The app accepts these messages only from a host with "neptun" in its name. See [Importing from Neptun](#importing-from-neptun).
+
 Per course you can mark it mandatory or optional, leave it out, or switch off individual sections (e.g. to stay in the same group as a friend). Preferences are remembered in the browser.
 
 Run it locally (ES modules and Web Workers don't work from `file://`):
@@ -72,6 +74,7 @@ To publish a change later, just run `firebase deploy --only hosting` again. Olde
 |---|---|
 | `web/js/solver.js` | The optimizer: loading, scoring, search |
 | `web/js/har.js` | Reads HAR files and detects which kind of input file it got |
+| `web/js/bookmarklet.js` | The Neptun bookmarklet (runs inside the Neptun page, so it must stay self-contained) |
 | `web/js/worker.js` | Runs the search in a Web Worker so the page stays responsive and can cancel it |
 | `web/js/app.js` | UI only: files, preferences, course toggles, result rendering |
 | `web/index.html`, `web/style.css` | Page and baseline styles |
@@ -129,6 +132,15 @@ The input is a JSON file. See [example.json](example.json) for a complete exampl
 ## Importing from Neptun
 
 On the course sign-up page, open the browser dev tools (Network tab), open a subject's course list, and save the JSON response of the course-list request (the one with a `data` array) to a file. Do this once per subject, then pass all the files to `cli.mjs` or drop them into the web app.
+
+### All subjects at once with the bookmarklet (easiest)
+
+1. On the web app, drag the blue **Neptun → Órarend** button to the bookmarks bar (Ctrl+Shift+B shows the bar).
+2. Open Neptun's course sign-up page (**Tárgyfelvétel**) and click the bookmark. A small panel appears in the bottom-right corner.
+3. Open each subject you want. The panel lists what it captured.
+4. Press **Megnyitás**: the web app opens with the subjects loaded. **Letöltés** saves the same data as `targyak.json`, which works with the web app and `cli.mjs`.
+
+Click the bookmark before opening the subjects: it only sees responses that arrive after it starts. If one was missed, reload the page, click the bookmark again and reopen that subject. The bookmark contains the code as it was when you dragged it, so drag it again after the bookmarklet changes.
 
 ### All subjects at once with a HAR file
 

@@ -32,16 +32,32 @@
       <section class="step" aria-labelledby="files-title">
         <h2 id="files-title">Neptun export</h2>
 
+        <div class="card neptun-button">
+          <a class="bookmarklet" id="bookmarklet" href="#" draggable="true" title="Húzd a könyvjelzősávba">Neptun → Órarend</a>
+          <p class="lead">Húzd ezt a gombot a könyvjelzősávba. Ha nem látod a sávot: <b>Ctrl+Shift+B</b>.</p>
+        </div>
+        <p class="error" id="bookmarklet-hint" role="status" hidden></p>
+        <details class="disclosure">
+          <summary>Hogyan használjam?</summary>
+          <ol class="howto">
+            <li>Neptunban nyisd meg a <b>Tárgyfelvétel</b> oldalt.</li>
+            <li>Kattints a könyvjelzősávban a <b>Neptun → Órarend</b> gombra. Jobb lent megjelenik egy kis ablak.</li>
+            <li>Nyisd le egyesével a tárgyakat, amiket fel akarsz venni. A kis ablak számolja, hányat rögzített.</li>
+            <li>Kattints a kis ablakban a <b>Megnyitás</b> gombra. Itt megnyílnak a tárgyaid.</li>
+          </ol>
+          <p class="note">A gomb csak a Neptun saját válaszaiból olvassa ki a kurzuslistákat. Nem kér le semmit magától, nem nyúl a bejelentkezésedhez, és csak ide küldi az adatot.</p>
+        </details>
+
         <label class="dropzone card" id="dropzone">
           <input type="file" id="file-input" accept=".har,.json,application/json" multiple hidden>
-          <span class="drop-title">Húzd ide a .har fájlt</span>
-          <span class="drop-sub">vagy kattints a tallózáshoz</span>
+          <span class="drop-title">Vagy húzd ide a fájlt</span>
+          <span class="drop-sub">.har export vagy a Letöltés gombbal mentett targyak.json</span>
         </label>
         <ul class="group" id="file-list" hidden></ul>
         <p class="error" id="file-error" role="alert" hidden></p>
 
         <details class="disclosure">
-          <summary>Hogyan készítsem el a .har fájlt?</summary>
+          <summary>.har fájl kézzel</summary>
           <ol class="howto">
             <li>Neptunban nyisd meg a <b>Tárgyfelvétel</b> oldalt.</li>
             <li>Nyomj F12-t, válts a <b>Network</b> fülre, és kapcsold be a <b>Preserve log</b> opciót.</li>
