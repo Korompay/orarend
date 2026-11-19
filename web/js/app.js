@@ -687,10 +687,14 @@ bookmarkletLink.addEventListener("click", (e) => {
   hint.textContent = "Ne itt kattints rá: húzd fel a könyvjelzősávba, és a Neptun Tárgyfelvétel oldalán használd.";
 });
 
-/** Only accept data from a Neptun page (any host with "neptun" in its name, e.g. neptun.bme.hu). */
+// Only these hosts may send data in. Add another university's Neptun host here to support it.
+const NEPTUN_HOSTS = new Set(["neptun.bme.hu"]);
+
+/** Only accept data from a real Neptun page over https. */
 function fromNeptun(origin) {
   try {
-    return new URL(origin).hostname.split(".").some((part) => part.includes("neptun"));
+    const url = new URL(origin);
+    return url.protocol === "https:" && NEPTUN_HOSTS.has(url.hostname);
   } catch {
     return false;
   }
