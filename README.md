@@ -137,7 +137,7 @@ On the course sign-up page, open the browser dev tools (Network tab), open a sub
 
 1. On the web app, drag the blue **Neptun → Órarend** button to the bookmarks bar (Ctrl+Shift+B shows the bar).
 2. Open Neptun's course sign-up page (**Tárgyfelvétel**) and click the bookmark. A small panel appears in the bottom-right corner.
-3. Open each subject you want. The panel lists what it captured.
+3. Open each subject you want. The panel lists what it captured; the ✕ next to a subject removes one you opened by mistake.
 4. Press **Megnyitás**: the web app opens with the subjects loaded. **Letöltés** saves the same data as `targyak.json`, which works with the web app and `cli.mjs`.
 
 Click the bookmark before opening the subjects: it only sees responses that arrive after it starts. If one was missed, reload the page, click the bookmark again and reopen that subject. The bookmark contains the code as it was when you dragged it, so drag it again after the bookmarklet changes.
